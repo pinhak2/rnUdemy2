@@ -1,25 +1,36 @@
-import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native'; 
+import React, {Component} from 'react';
+import {View, Text, Button} from 'react-native';
 import Jobs from './src/images/jobs';
 import Skeedoo from './src/images/skeedo';
 
-class App extends Component{
-  render(){
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Matheus',
+    };
+    this.enter = this.enter.bind(this);
+  }
 
+  enter(name){
+    this.setState({
+      name: name,
+    });
+  }
+
+  render() {
     let nome = 'Matheus';
-    
-    return(
-      <View>
-        <Text>Olá Mundo!!!!</Text>
-        <Text>Meu Primeiro App</Text>    
-        <Text style={{ color: '#FF0000', fontSize: 25, margin: 15 }}>
-          Sujeito Programador
+
+    return (
+      <View style={{marginTop: 20}}>
+
+        <Button title="Entrar" color='#FF0FF0' onPress={() => this.enter('João Silva') }/>    
+        <Button title="Entrar" onPress={() => this.enter('Jeremias') }/>    
+        <Text style={{color: '#FF0000', fontSize: 25, margin: 15}}>
+          Teste {this.state.name}
         </Text>
-        <Jobs />
+        <Jobs width={500} height={200} name={'Stevão Jobs'} />
         <Skeedoo />
-
-        <Text style={{ fontSize: 30 }}> {nome} </Text>
-
       </View>
     );
   }
