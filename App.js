@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState, useRef} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
@@ -11,6 +11,7 @@ import {
 export default function App() {
   const [nome, setNome] = useState('');
   const [input, setInput] = useState('');
+  const nomeInput = useRef(null);
 
 
  
@@ -42,6 +43,9 @@ export default function App() {
     setNome(input);
   }
 
+  function novoNome(){
+    nomeInput.current.focus();
+  }
 
   const letrasNome =  useMemo(() => {
     console.log('Mudou letra');
@@ -57,14 +61,21 @@ export default function App() {
         placeholder="Seu nome..."
         value={input}
         onChangeText={(texto) => setInput(texto)}
+        ref={nomeInput}
+        
       />
 
       <TouchableOpacity style={styles.btn} onPress={alteraNome}>
         <Text style={styles.btnTxt}> Altera Nome</Text>
       </TouchableOpacity>
 
+   
+
       <Text style={styles.texto}>{nome}</Text>
       <Text style={styles.texto}>Tem {letrasNome} letras</Text>
+      <TouchableOpacity style={styles.btn2} onPress={novoNome}>
+        <Text style={styles.btnTxt}> Novo Nome</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -80,6 +91,10 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#222',
+    alignItems: 'center',
+  },
+  btn2: {
+    backgroundColor: '#888',
     alignItems: 'center',
   },
   btnTxt: {
