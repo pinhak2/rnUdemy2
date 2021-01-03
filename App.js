@@ -1,52 +1,30 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Animated } from 'react-native';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       larAnimada: new Animated.Value(150),
-      altAnimada: new Animated.Value(50),
-      opacidadeAnimada: new Animated.Value(0),
+      altAnimada: new Animated.Value(35),
     };
 
-    Animated.sequence([
-      Animated.timing(this.state.opacidadeAnimada, {
-        toValue: 1,
-        duration: 2000,
-        useNativeDriver: false,
-      }),
-
-      Animated.parallel([
+    Animated.loop(
+      Animated.sequence([
         Animated.timing(this.state.larAnimada, {
-          toValue: 300,
-          duration: 500,
+          toValue: 200,
+          duration: 700,
           useNativeDriver: false,
         }),
 
-        Animated.timing(this.state.altAnimada, {
-          toValue: 200,
-          duration: 500,
+        Animated.timing(this.state.larAnimada, {
+          toValue: 150,
+          duration: 700,
           useNativeDriver: false,
         }),
       ]),
-
-      Animated.timing(this.state.opacidadeAnimada, {
-        toValue: 0,
-        duration: 2000,
-        useNativeDriver: false,
-      }),
-    ]).start();
-
-    // Animated.timing(
-    //   this.state.altAnimada,
-    //   {
-    //     toValue: 150,
-    //     duration: 2000,
-    //     useNativeDriver: false
-    //   }
-    // ).start();
+    ).start();
   }
 
   render() {
@@ -58,7 +36,7 @@ class App extends Component {
             height: this.state.altAnimada,
             backgroundColor: '#4169E1',
             justifyContent: 'center',
-            opacity: this.state.opacidadeAnimada,
+            borderRadius: 25,
           }}>
           <Text style={{ color: '#FFFFFF', fontSize: 22, textAlign: 'center' }}>
             Carregando...
@@ -76,5 +54,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default App;
