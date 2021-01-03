@@ -1,35 +1,33 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
+
+import api from './src/services/api';
+import Filmes from './src/filmes/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      nome: '',
-      input: '',
-    };
 
-    this.entrar = this.entrar.bind(this);
+    this.state = {
+      filmes: [],
+    };
   }
-  entrar() {
-    if (this.state.input === '') {
-      alert('Digite seu nome!');
-      return;
-    }
-    this.setState({nome: 'Bem vindo: ' + this.state.input});
+
+  async componentDidMount() {
+    const response = await api.get('r-api/?api=filmes');
+    this.setState({
+      filmes: response.data,
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Digite seu nome"
-          underlineColorAndroid="transparent"
-          onChangeText={(texto) => this.setState({input: texto})}
+        <FlatList
+          data={this.state.filmes}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({item}) => <Filmes data={item} />}
         />
-        <Button title="Entrar" onPress={this.entrar} />
-        <Text style={styles.texto}> {this.state.nome}</Text>
       </View>
     );
   }
@@ -38,18 +36,6 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  input: {
-    height: 45,
-    borderWidth: 1,
-    borderColor: '#222',
-    margin: 10,
-    fontSize: 20,
-    padding: 10,
-  },
-  texto: {
-    textAlign: 'center',
-    fontSize: 25,
   },
 });
 
