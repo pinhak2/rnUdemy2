@@ -11,20 +11,24 @@ export default class App extends Component {
     };
 
     Animated.loop(
-      Animated.sequence([
-        Animated.timing(this.state.larAnimada, {
-          toValue: 200,
-          duration: 700,
-          useNativeDriver: false,
-        }),
-
-        Animated.timing(this.state.larAnimada, {
-          toValue: 150,
-          duration: 700,
-          useNativeDriver: false,
-        }),
-      ]),
+      Animated.sequence([this.animacaoDeAbrir(), this.animacaoDeFechar()]),
     ).start();
+  }
+
+  animacaoDeFechar() {
+    return Animated.timing(this.state.larAnimada, {
+      toValue: 150,
+      duration: 700,
+      useNativeDriver: false,
+    });
+  }
+
+  animacaoDeAbrir() {
+    return Animated.timing(this.state.larAnimada, {
+      toValue: 200,
+      duration: 700,
+      useNativeDriver: false,
+    });
   }
 
   render() {
