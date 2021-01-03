@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Text, Animated } from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet, Text, Animated, TouchableOpacity} from 'react-native';
 
 export default class App extends Component {
   constructor(props) {
@@ -8,44 +8,67 @@ export default class App extends Component {
     this.state = {
       larAnimada: new Animated.Value(150),
       altAnimada: new Animated.Value(35),
+      opAnimada: new Animated.Value(0)
     };
-
-    Animated.loop(
-      Animated.sequence([this.animacaoDeAbrir(), this.animacaoDeFechar()]),
-    ).start();
+    this.carregarGrafico = this.carregarGrafico.bind(this);
   }
 
-  animacaoDeFechar() {
-    return Animated.timing(this.state.larAnimada, {
-      toValue: 150,
-      duration: 700,
-      useNativeDriver: false,
-    });
-  }
+  carregarGrafico() {
+    Animated.sequence([
 
-  animacaoDeAbrir() {
-    return Animated.timing(this.state.larAnimada, {
-      toValue: 200,
-      duration: 700,
-      useNativeDriver: false,
-    });
+      Animated.timing(this.state.opAnimada,{
+        toValue:1,
+        duration: 400,
+        useNativeDriver: false
+      }),
+      Animated.timing(
+        this.state.altAnimada,
+        { 
+          toValue:300,
+          duration:1000,
+          useNativeDriver: false
+        }
+      ),
+    ]).start();
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Animated.View
+      <View style={{flex: 1}}>
+        <View
           style={{
-            width: this.state.larAnimada,
-            height: this.state.altAnimada,
-            backgroundColor: '#4169E1',
+            height: 70,
+            alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 25,
+            flexDirection: 'row',
+            backgroundColor: '#4169E1',
           }}>
-          <Text style={{ color: '#FFFFFF', fontSize: 22, textAlign: 'center' }}>
-            Carregando...
-          </Text>
-        </Animated.View>
+          <TouchableOpacity onPress={this.carregarGrafico}>
+            <Text style={{fontSize: 25, color: 'white'}}>Gerar Grafico</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+            <Text style={{fontSize: 22, textAlign: 'center'}}>Vendas</Text>
+          <Animated.View
+            style={{
+              width: this.state.larAnimada,
+              height: this.state.altAnimada,
+              backgroundColor: '#FF0000',
+              justifyContent: 'center',
+              opacity: this.state.opAnimada,
+            }}>
+            <Text style={{color: '#FFFFFF', fontSize: 22, textAlign: 'center'}}>
+              R$150,00
+            </Text>
+          </Animated.View>
+        </View>
       </View>
     );
   }
