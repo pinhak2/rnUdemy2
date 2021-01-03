@@ -4,16 +4,15 @@ import {View, Text} from 'react-native';
 class App extends Component {
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#22A'}}>
-        <View style={{flex: 3, backgroundColor: 'red'}}>
-          <Text>Texto aqui!</Text>
-        </View>
-        <View style={{flex: 10, backgroundColor: 'green'}}>
-          <Text>Texto aqui!</Text>
-        </View>
-        <View style={{flex: 4, backgroundColor: 'yellow'}}>
-          <Text>Texto aqui!</Text>
-        </View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'stretch',
+        }}>
+        <View style={{width: 100, height: 50, backgroundColor: 'green'}}></View>
+        <View style={{ height: 50, backgroundColor: 'red'}}></View>
+        <View style={{ height: 50, backgroundColor: 'yellow'}}></View>
       </View>
     );
   }
