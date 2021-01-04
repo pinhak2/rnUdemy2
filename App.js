@@ -1,80 +1,21 @@
 import React, {useEffect, useMemo, useState, useRef} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function App() {
-  const [nome, setNome] = useState('');
-  const [input, setInput] = useState('');
-  const nomeInput = useRef(null);
-
-
- 
-
-  //Component DidMount
-  useEffect(() => {
-    async function getStorage() {
-      const nomeStorage = await AsyncStorage.getItem('nomes');
-      if (nomeStorage !== null) {
-        setNome(nomeStorage);
-      }
-    }
-
-    getStorage();
-
-    //return() => {};
-  }, []);
-
-
-    //Component DidUpdate
-  useEffect(() => {
-    async function saveStorage() {
-      await AsyncStorage.setItem('nomes', nome);
-    }
-    saveStorage();
-  }, [nome]);
-
-  function alteraNome() {
-    setNome(input);
-  }
-
-  function novoNome(){
-    nomeInput.current.focus();
-  }
-
-  const letrasNome =  useMemo(() => {
-    console.log('Mudou letra');
-    return nome.length;
-  },[nome]);
- 
-
- 
-
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Seu nome..."
-        value={input}
-        onChangeText={(texto) => setInput(texto)}
-        ref={nomeInput}
-        
-      />
+      <Text style={styles.btnTxt}> Novo Nome</Text>
 
-      <TouchableOpacity style={styles.btn} onPress={alteraNome}>
-        <Text style={styles.btnTxt}> Altera Nome</Text>
-      </TouchableOpacity>
+      <FontAwesome name="home" size={45} color="#11118C" />
+      <Feather name="user" size={45} color="#54A300" />
+      <FontAwesome name="gift" size={45} color="#F0F" />
 
-   
-
-      <Text style={styles.texto}>{nome}</Text>
-      <Text style={styles.texto}>Tem {letrasNome} letras</Text>
-      <TouchableOpacity style={styles.btn2} onPress={novoNome}>
-        <Text style={styles.btnTxt}> Novo Nome</Text>
+      <TouchableOpacity style={styles.btnYoutube}>
+        <FontAwesome name="youtube" size={45} color="#FFF" />
+        <Text style={styles.btnTxt}>Acessar Canal</Text>
       </TouchableOpacity>
     </View>
   );
@@ -83,21 +24,20 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
-  },
-  texto: {
-    color: '#000',
-    fontSize: 35,
-  },
-  btn: {
-    backgroundColor: '#222',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  btn2: {
-    backgroundColor: '#888',
+  btnYoutube: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
+    padding: 5,
+    backgroundColor: "#FF0000",
+    borderRadius: 5
   },
-  btnTxt: {
-    color: '#FFF',
-  },
+
+  btnTxt:{
+    paddingLeft: 10,
+    color: "#FFF"
+  }
 });
